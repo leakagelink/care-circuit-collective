@@ -31,9 +31,9 @@ function Admin() {
           </Card>
         ))}
       </div>
-      <div className="mt-4 grid gap-4 xl:grid-cols-3">
-        <Card title="Monthly revenue (₹K)" className="xl:col-span-2">
-          <div className="flex h-48 items-end gap-2">
+      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+        <Card title="Monthly revenue (₹K)" className="lg:col-span-2">
+          <div className="flex h-48 items-end gap-1 sm:gap-2">
             {revenue.map((v, i) => (
               <div key={i} className="flex-1 rounded-t bg-primary/80" style={{ height: `${v}%` }} />
             ))}
@@ -45,7 +45,7 @@ function Admin() {
       </div>
       <CustomerLookup />
       <Card title="Customers" className="mt-4 overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[560px] text-sm">
           <thead className="text-left text-muted-foreground">
             <tr><th className="pb-2">ID</th><th>Name</th><th>Area</th><th>Plan</th><th>Due</th><th>Status</th></tr>
           </thead>
