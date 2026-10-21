@@ -14,6 +14,16 @@ const nav: Record<Role, string[]> = {
 
 const roleLabel: Record<Role, string> = { admin: "Admin", staff: "Staff", customer: "Customer" };
 
+const itemIcons: Record<string, typeof LayoutDashboard> = {
+  Overview: LayoutDashboard, Customers: Users, Billing: Receipt, Complaints: LifeBuoy,
+  Staff: UserCog, "GPS Map": MapPin, Reports: BarChart3, Settings: Settings,
+  Today: CalendarCheck, "My Tasks": ListChecks, Collections: Wallet,
+  "Route Map": Map, Profile: User, Home: Home, "Bills & Payments": Receipt,
+  "My Plan": Package, Location: MapPin,
+};
+
+const maxBottomItems = 4;
+
 export function AppShell({ role, title, children }: { role: Role; title: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const switcher = (
