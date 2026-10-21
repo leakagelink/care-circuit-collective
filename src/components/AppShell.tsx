@@ -34,9 +34,9 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
     </div>
   );
   const items = (
-    <nav className="flex flex-col gap-1 px-3">
+    <nav className="fl-stagger flex flex-col gap-1 px-3">
       {nav[role].map((item, i) => (
-        <span key={item} onClick={() => setOpen(false)} className={`cursor-pointer whitespace-nowrap rounded-md px-3 py-2 text-sm ${i === 0 ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold" : "text-sidebar-foreground/75 hover:bg-sidebar-accent"}`}>
+        <span key={item} onClick={() => setOpen(false)} className={`cursor-pointer whitespace-nowrap rounded-md px-3 py-2 text-sm transition-all duration-200 hover:translate-x-1 ${i === 0 ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-md" : "text-sidebar-foreground/75 hover:bg-sidebar-accent"}`}>
           {item}
         </span>
       ))}
@@ -44,7 +44,7 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
   );
   return (
     <div className="min-h-screen bg-background lg:flex">
-      <header className="sticky top-0 z-30 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 bg-sidebar px-4 py-3 text-sidebar-foreground lg:hidden">
+      <header className="sticky top-0 z-30 grid shadow-md backdrop-blur grid-cols-[minmax(0,1fr)_auto] items-center gap-3 bg-sidebar px-4 py-3 text-sidebar-foreground lg:hidden">
         <div className="flex min-w-0 items-center gap-3">
           <Link to="/" className="truncate font-display text-lg font-bold">Fieldline<span className="text-sidebar-primary">.</span></Link>
           <span className="shrink-0 rounded-full bg-sidebar-accent px-2.5 py-0.5 text-xs font-semibold">{roleLabel[role]}</span>
@@ -55,8 +55,8 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
       </header>
       {open && (
         <div className="fixed inset-0 z-20 lg:hidden">
-          <div className="absolute inset-0 bg-foreground/40" onClick={() => setOpen(false)} />
-          <aside className="absolute left-0 top-14 flex h-[calc(100%-3.5rem)] w-72 max-w-[85%] flex-col justify-between bg-sidebar py-4 text-sidebar-foreground">
+          <div className="fl-fade absolute inset-0 bg-foreground/40 backdrop-blur-sm" onClick={() => setOpen(false)} />
+          <aside className="fl-drawer absolute left-0 top-14 flex h-[calc(100%-3.5rem)] w-72 max-w-[85%] flex-col justify-between bg-sidebar py-4 text-sidebar-foreground">
             {items}
             <div className="p-4"><p className="mb-2 text-xs uppercase tracking-wider text-sidebar-foreground/50">Switch role (demo)</p>{switcher}</div>
           </aside>
@@ -72,7 +72,7 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
       </aside>
       <main className="min-w-0 flex-1 p-4 pb-24 sm:p-6 sm:pb-28 lg:p-8 lg:pb-8">
         <div className="mb-2 inline-block rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">Demo data</div>
-        <h1 className="mb-6 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{title}</h1>
+        <h1 className="fl-rise mb-6 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{title}</h1>
         {children}
       </main>
       <nav aria-label="Bottom navigation" className="fixed inset-x-0 bottom-0 z-20 flex items-stretch justify-around border-t border-sidebar-border bg-sidebar pb-[env(safe-area-inset-bottom)] text-sidebar-foreground lg:hidden">
@@ -80,7 +80,7 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
           const Icon = itemIcons[item];
           return (
             <span key={item} onClick={() => setOpen(false)} className={`flex flex-1 cursor-pointer flex-col items-center gap-0.5 py-2 text-[11px] ${i === 0 ? "font-semibold text-sidebar-primary" : "text-sidebar-foreground/75"}`}>
-              {Icon && <Icon className="h-5 w-5" />}
+              {Icon && <span className={`rounded-full px-3 py-0.5 transition-colors ${i === 0 ? "fl-pop bg-sidebar-primary/20" : ""}`}><Icon className="h-5 w-5" /></span>}
               <span className="max-w-full truncate">{item}</span>
             </span>
           );
@@ -98,7 +98,7 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
 
 export function Card({ title, children, className = "" }: { title?: string; children: ReactNode; className?: string }) {
   return (
-    <section className={`rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm ${className}`}>
+    <section className={`rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm fl-card ${className}`}>
       {title && <h2 className="mb-4 font-display text-base font-semibold">{title}</h2>}
       {children}
     </section>
@@ -112,5 +112,5 @@ export function Badge({ children }: { children: ReactNode }) {
     : /paid|resolved/i.test(s)
       ? "bg-success/15 text-success"
       : "bg-muted text-muted-foreground";
-  return <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${tone}`}>{children}</span>;
+  return <span className={`rounded-full px-2 py-0.5 text-xs font-medium fl-pop ${tone}`}>{children}</span>;
 }
