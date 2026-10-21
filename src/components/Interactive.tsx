@@ -17,7 +17,7 @@ const history = (due: number) => [
 ];
 
 export function GpsStatus({ id }: { id: string }) {
-  const [g, setG] = useState(gps[id]);
+  const [g, setG] = useState(gps[id] ?? { lat: 0, lng: 0, status: "Pending check", at: "—" });
   return (
     <div className="text-sm">
       <div className="flex items-center justify-between"><span className="font-medium">GPS status</span><Badge>{g.status}</Badge></div>
@@ -31,9 +31,9 @@ export function GpsStatus({ id }: { id: string }) {
 
 export function CustomerLookup() {
   const [q, setQ] = useState("");
-  const [sel, setSel] = useState(customers[0].id);
+  const [sel, setSel] = useState(customers[0]?.id ?? "");
   const list = customers.filter((c) => `${c.id} ${c.name} ${c.area}`.toLowerCase().includes(q.toLowerCase()));
-  const c = customers.find((x) => x.id === sel)!;
+  const c = customers.find((x) => x.id === sel) ?? customers[0]!;
   return (
     <Card title="Customer lookup" className="mt-4">
       <div className="grid gap-5 lg:grid-cols-3">
