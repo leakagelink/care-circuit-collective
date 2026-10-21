@@ -70,11 +70,28 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
         <div className="flex-1">{items}</div>
         <div className="p-4"><p className="mb-2 text-xs uppercase tracking-wider text-sidebar-foreground/50">Switch role (demo)</p>{switcher}</div>
       </aside>
-      <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+      <main className="min-w-0 flex-1 p-4 pb-24 sm:p-6 sm:pb-28 lg:p-8 lg:pb-8">
         <div className="mb-2 inline-block rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">Demo data</div>
         <h1 className="mb-6 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{title}</h1>
         {children}
       </main>
+      <nav aria-label="Bottom navigation" className="fixed inset-x-0 bottom-0 z-20 flex items-stretch justify-around border-t border-sidebar-border bg-sidebar pb-[env(safe-area-inset-bottom)] text-sidebar-foreground lg:hidden">
+        {nav[role].slice(0, maxBottomItems).map((item, i) => {
+          const Icon = itemIcons[item];
+          return (
+            <span key={item} onClick={() => setOpen(false)} className={`flex flex-1 cursor-pointer flex-col items-center gap-0.5 py-2 text-[11px] ${i === 0 ? "font-semibold text-sidebar-primary" : "text-sidebar-foreground/75"}`}>
+              {Icon && <Icon className="h-5 w-5" />}
+              <span className="max-w-full truncate">{item}</span>
+            </span>
+          );
+        })}
+        {nav[role].length > maxBottomItems && (
+          <button onClick={() => setOpen(true)} aria-label="More menu" className="flex flex-1 flex-col items-center gap-0.5 py-2 text-[11px] text-sidebar-foreground/75">
+            <Menu className="h-5 w-5" />
+            <span>More</span>
+          </button>
+        )}
+      </nav>
     </div>
   );
 }
