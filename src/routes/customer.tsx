@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, Badge, Card } from "@/components/AppShell";
-import { complaints, invoices } from "@/lib/mock-data";
+import { GpsStatus, RaiseComplaint } from "@/components/Interactive";
+import { invoices } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/customer")({
   head: () => ({
@@ -29,7 +30,8 @@ function Customer() {
         <Card title="My plan">
           <p className="font-medium">Premium Monthly</p>
           <p className="text-sm text-muted-foreground">₹1,200 / month · renews 1 Nov</p>
-          <p className="mt-3 text-sm text-muted-foreground">Account CU-1042 · Sector 12</p>
+          <p className="mt-3 mb-4 text-sm text-muted-foreground">Account CU-1042 · Sector 12</p>
+          <GpsStatus id="CU-1042" />
         </Card>
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
@@ -44,13 +46,7 @@ function Customer() {
           </ul>
         </Card>
         <Card title="My complaints">
-          {complaints.filter((c) => c.customer === "Asha Verma").map((c) => (
-            <div key={c.id} className="flex items-center justify-between text-sm">
-              <span><span className="font-medium">{c.issue}</span><br /><span className="text-muted-foreground">{c.id} · {c.staff}</span></span>
-              <Badge>{c.status}</Badge>
-            </div>
-          ))}
-          <button disabled className="mt-5 w-full rounded-md border border-border py-2 text-sm font-medium">Raise a complaint (coming soon)</button>
+          <RaiseComplaint />
         </Card>
       </div>
     </AppShell>

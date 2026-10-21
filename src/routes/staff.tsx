@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, Badge, Card } from "@/components/AppShell";
-import { complaints, staffTasks } from "@/lib/mock-data";
+import { ComplaintManager, GpsStatus } from "@/components/Interactive";
+import { staffTasks } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/staff")({
   head: () => ({
@@ -37,15 +38,8 @@ function Staff() {
           </ol>
         </Card>
         <Card title="Assigned complaints">
-          <ul className="space-y-3">
-            {complaints.filter((c) => c.staff === "Imran K.").map((c) => (
-              <li key={c.id} className="flex items-center justify-between text-sm">
-                <span><span className="font-medium">{c.issue}</span><br /><span className="text-muted-foreground">{c.id} · {c.customer}</span></span>
-                <Badge>{c.status}</Badge>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-6 grid h-40 place-items-center rounded-lg bg-muted text-sm text-muted-foreground">Route map available after GPS setup</div>
+          <ComplaintManager canAssign={false} filter={(c) => c.staff === "Imran K."} />
+          <div className="mt-6 border-t border-border pt-4"><p className="mb-2 text-xs text-muted-foreground">Next visit: Asha Verma</p><GpsStatus id="CU-1042" /></div>
         </Card>
       </div>
     </AppShell>

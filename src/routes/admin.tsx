@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, Badge, Card } from "@/components/AppShell";
-import { complaints, customers, kpis } from "@/lib/mock-data";
+import { CustomerLookup, ComplaintManager } from "@/components/Interactive";
+import { customers, kpis } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -39,16 +40,10 @@ function Admin() {
           </div>
         </Card>
         <Card title="Complaints">
-          <ul className="space-y-3">
-            {complaints.map((c) => (
-              <li key={c.id} className="flex items-center justify-between text-sm">
-                <span><span className="font-medium">{c.issue}</span><br /><span className="text-muted-foreground">{c.customer}</span></span>
-                <Badge>{c.status}</Badge>
-              </li>
-            ))}
-          </ul>
+          <ComplaintManager />
         </Card>
       </div>
+      <CustomerLookup />
       <Card title="Customers" className="mt-4 overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-left text-muted-foreground">
