@@ -76,7 +76,7 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
       <main className="min-w-0 flex-1 p-4 pb-24 sm:p-6 sm:pb-28 lg:p-8 lg:pb-8">
         <div className="mb-2 inline-block rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">Demo data</div>
         <h1 className="fl-rise mb-6 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{active === 0 ? title : nav[role][active]}</h1>
-        {active === 0 ? children : <div key={active} className="fl-rise"><SectionContent item={nav[role][active]} /></div>}
+        {active === 0 ? children : <div key={active} className="fl-rise"><SectionContent item={nav[role][active] ?? ""} /></div>}
       </main>
       <nav aria-label="Bottom navigation" className="fixed inset-x-0 bottom-0 z-20 flex items-stretch justify-around border-t border-sidebar-border bg-sidebar pb-[env(safe-area-inset-bottom)] text-sidebar-foreground lg:hidden">
         {nav[role].slice(0, maxBottomItems).map((item, i) => {
