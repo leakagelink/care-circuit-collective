@@ -26,6 +26,8 @@ const maxBottomItems = 4;
 
 export function AppShell({ role, title, children }: { role: Role; title: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
+  const go = (i: number) => { setActive(i); setOpen(false); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); };
   const switcher = (
     <div className="flex gap-2 text-xs">
       <Link to="/admin" className="rounded bg-sidebar-accent px-2 py-1">Admin</Link>
@@ -36,9 +38,9 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
   const items = (
     <nav className="fl-stagger flex flex-col gap-1 px-3">
       {nav[role].map((item, i) => (
-        <span key={item} onClick={() => setOpen(false)} className={`cursor-pointer whitespace-nowrap rounded-md px-3 py-2 text-sm transition-all duration-200 hover:translate-x-1 ${i === 0 ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-md" : "text-sidebar-foreground/75 hover:bg-sidebar-accent"}`}>
+        <button type="button" key={item} onClick={() => go(i)} className={`text-left cursor-pointer whitespace-nowrap rounded-md px-3 py-2 text-sm transition-all duration-200 hover:translate-x-1 ${i === active ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-md" : "text-sidebar-foreground/75 hover:bg-sidebar-accent"}`}>
           {item}
-        </span>
+        </button>
       ))}
     </nav>
   );
@@ -72,17 +74,23 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
       </aside>
       <main className="min-w-0 flex-1 p-4 pb-24 sm:p-6 sm:pb-28 lg:p-8 lg:pb-8">
         <div className="mb-2 inline-block rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">Demo data</div>
-        <h1 className="fl-rise mb-6 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{title}</h1>
-        {children}
+        <h1 className="fl-rise mb-6 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{active === 0 ? title : nav[role][active]}</h1>
+        {active === 0 ? children : (
+          <section key={active} className="rounded-xl border border-border bg-card p-8 text-center text-card-foreground shadow-sm">
+            <p className="font-display text-lg font-semibold">{nav[role][active]}</p>
+            <p className="mt-2 text-sm text-muted-foreground">Ye section jald aa raha hai (demo). Dashboard par wapas jaane ke liye pehla option chuniye.</p>
+            <button type="button" onClick={() => go(0)} className="mt-4 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">Back to {nav[role][0]}</button>
+          </section>
+        )}
       </main>
       <nav aria-label="Bottom navigation" className="fixed inset-x-0 bottom-0 z-20 flex items-stretch justify-around border-t border-sidebar-border bg-sidebar pb-[env(safe-area-inset-bottom)] text-sidebar-foreground lg:hidden">
         {nav[role].slice(0, maxBottomItems).map((item, i) => {
           const Icon = itemIcons[item];
           return (
-            <span key={item} onClick={() => setOpen(false)} className={`flex flex-1 cursor-pointer flex-col items-center gap-0.5 py-2 text-[11px] ${i === 0 ? "font-semibold text-sidebar-primary" : "text-sidebar-foreground/75"}`}>
-              {Icon && <span className={`rounded-full px-3 py-0.5 transition-colors ${i === 0 ? "fl-pop bg-sidebar-primary/20" : ""}`}><Icon className="h-5 w-5" /></span>}
+            <button type="button" key={item} onClick={() => go(i)} className={`flex flex-1 cursor-pointer flex-col items-center gap-0.5 py-2 text-[11px] ${i === active ? "font-semibold text-sidebar-primary" : "text-sidebar-foreground/75"}`}>
+              {Icon && <span className={`rounded-full px-3 py-0.5 transition-colors ${i === active ? "fl-pop bg-sidebar-primary/20" : ""}`}><Icon className="h-5 w-5" /></span>}
               <span className="max-w-full truncate">{item}</span>
-            </span>
+            </button>
           );
         })}
         {nav[role].length > maxBottomItems && (
