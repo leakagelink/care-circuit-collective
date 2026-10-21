@@ -4,6 +4,7 @@ import {
   Menu, X, LayoutDashboard, Users, Receipt, LifeBuoy, UserCog, MapPin,
   BarChart3, Settings, CalendarCheck, ListChecks, Wallet, Map, User, Home, Package,
 } from "lucide-react";
+import { SectionContent } from "@/components/Sections";
 import type { Role } from "@/lib/mock-data";
 
 const nav: Record<Role, string[]> = {
@@ -75,13 +76,7 @@ export function AppShell({ role, title, children }: { role: Role; title: string;
       <main className="min-w-0 flex-1 p-4 pb-24 sm:p-6 sm:pb-28 lg:p-8 lg:pb-8">
         <div className="mb-2 inline-block rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">Demo data</div>
         <h1 className="fl-rise mb-6 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{active === 0 ? title : nav[role][active]}</h1>
-        {active === 0 ? children : (
-          <section key={active} className="rounded-xl border border-border bg-card p-8 text-center text-card-foreground shadow-sm">
-            <p className="font-display text-lg font-semibold">{nav[role][active]}</p>
-            <p className="mt-2 text-sm text-muted-foreground">Ye section jald aa raha hai (demo). Dashboard par wapas jaane ke liye pehla option chuniye.</p>
-            <button type="button" onClick={() => go(0)} className="mt-4 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">Back to {nav[role][0]}</button>
-          </section>
-        )}
+        {active === 0 ? children : <div key={active} className="fl-rise"><SectionContent item={nav[role][active] ?? ""} /></div>}
       </main>
       <nav aria-label="Bottom navigation" className="fixed inset-x-0 bottom-0 z-20 flex items-stretch justify-around border-t border-sidebar-border bg-sidebar pb-[env(safe-area-inset-bottom)] text-sidebar-foreground lg:hidden">
         {nav[role].slice(0, maxBottomItems).map((item, i) => {
