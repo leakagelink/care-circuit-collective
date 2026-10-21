@@ -48,7 +48,7 @@ function MapMock({ pins }: { pins: { label: string; x: number; y: number }[] }) 
     </div>
   );
 }
-const pins = customers.map((c, i) => ({ label: c.name.split(" ")[0], x: 15 + i * 17, y: 30 + ((i * 23) % 50) }));
+const pins = customers.map((c, i) => ({ label: c.name.split(" ")[0] ?? c.name, x: 15 + i * 17, y: 30 + ((i * 23) % 50) }));
 
 function Settings() {
   const [s, setS] = useState({ name: "Fieldline Services", currency: "INR", dueDay: "25", late: "50", reminders: true });
