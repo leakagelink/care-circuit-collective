@@ -1,6 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
-import { Menu, X } from "lucide-react";
+import {
+  Menu, X, LayoutDashboard, Users, Receipt, LifeBuoy, UserCog, MapPin,
+  BarChart3, Settings, CalendarCheck, ListChecks, Wallet, Map, User, Home, Package,
+} from "lucide-react";
 import type { Role } from "@/lib/mock-data";
 
 const nav: Record<Role, string[]> = {
