@@ -132,7 +132,7 @@ export function SectionContent({ item }: { item: string }) {
     case "Customers": return <><div className="mb-4 flex justify-end"><button className={btn} onClick={() => toast.success("Customer added (demo)")}>+ Add customer</button></div><CustomerLookup /></>;
     case "Billing": return <><Stats items={[["Billed (Oct)", "₹8.42L"], ["Collected", "₹7.25L"], ["Outstanding", "₹1.17L"], ["Overdue accounts", "48"]]} />
       <Card title="Customer dues"><Table head={["Customer", "Plan", "Due", "Status", ""]} rows={customers.map((c) => [c.name, c.plan, inr(c.due), <Badge>{c.status}</Badge>, c.due > 0 ? <button className={btn2} onClick={() => toast.success(`Reminder sent to ${c.name}`)}>Remind</button> : "—"])} /></Card></>;
-    case "Complaints": return item && <ComplaintManager />;
+    case "Complaints": return <ComplaintManager />;
     case "Staff": return <Card title="Field staff"><Table head={["Name", "Zone", "Visits", "Collected", "Status"]} rows={staffList.map((s) => [s.name, s.zone, s.visits, inr(s.collected), <Badge>{s.status}</Badge>])} /></Card>;
     case "GPS Map": case "Route Map": return <><Card title={item}><MapMock pins={pins} /></Card><div className="mt-6 grid gap-4 lg:grid-cols-2">{customers.slice(0, 2).map((c) => <Card key={c.id} title={c.name}><GpsStatus id={c.id} /></Card>)}</div></>;
     case "Reports": return <><Stats items={[["Revenue YTD", "₹78.6L"], ["Collection rate", "86%"], ["Avg. resolution", "1.8 days"], ["New customers", "142"]]} />
